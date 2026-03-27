@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Your Notes</h2>
+
+<form method="get" class="mb-3">
+    <input type="text" name="q" placeholder="Search notes..." class="form-control">
+</form>
+
+<a href="{% url 'note_create' %}" class="btn btn-primary mb-3">+ Create Note</a>
+
+<div class="row">
+{% for note in notes %}
+    <div class="col-md-4">
+        <div class="note-card" style="background: {{note.color}}">
+            {% if note.pinned %}📌{% endif %}
+            <h4>{{ note.title }}</h4>
+            <p>{{ note.content }}</p>
+
+            <a href="{% url 'note_edit' note.id %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'note_delete' note.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+{% empty %}
+    <p>No notes yet</p>
+{% endfor %}
+</div>
+
+{% endblock %}
